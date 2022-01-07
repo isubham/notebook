@@ -36,3 +36,16 @@
     transform: rotate(360deg);
   }
 }
+
+.blog-cell {
+  background-color: antiquewhite;
+  width: 400px;
+  /* height: 400px; */
+  margin: auto;
+}
+
+.menu {
+  background-color: white;
+  width: 200px;
+  height: 200px;
+}
