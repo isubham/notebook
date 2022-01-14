@@ -14,6 +14,10 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
+### `npm test -- -- coverage`
+
+Launches the test runner in watchmode and shows coverage of each file
+
 ### `npm test`
 
 Launches the test runner in the interactive watch mode.\

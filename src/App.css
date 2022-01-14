@@ -49,3 +49,13 @@
   width: 200px;
   height: 200px;
 }
+
+.dark {
+  background-color: black;
+  color: white;
+}
+
+.light {
+  background-color: white;
+  color: black;
+}

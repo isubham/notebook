@@ -1,32 +1,27 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import React from 'react';
+import { ThemeContext } from "../../providers/ThemeProvider";
 
 export const BlogCell = ({addCell}) => {
 
-  // const formats = {
-  //   'p' : 'p',
-  //   'h1' : 'h1'
-  // }
-
-  // const [currentFormat, setCurrentFormatting] = useState(formats.p)
+  const theme = useContext(ThemeContext)
 
   const [value, setValue] = useState({html: '', text: ''})
 
   const _changeListener = (event) => {
-    // console.log(event)
     const [text, html] = [event.target.innerText, event.target.innerHTML]
     setValue({text: text, html: html})
+
   }
 
   const _handleKeyDown = (event) => {
     if (event.key === 'Enter')
     {
         addCell()
-    }
-    console.log(event)
+    }   
   }
 
-  return (<div>
+  return (<div className={theme}>
     {/* <p>Current Format {currentFormat}</p>
     <button onClick={() => setCurrentFormatting(formats.h1)}>h1</button>
     <button onClick={() => setCurrentFormatting(formats.p)}>p</button> */}
