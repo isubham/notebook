@@ -5,7 +5,7 @@ import { BlogCell } from '../blog-cell';
 
 export const BlogCells = () => {
 
-  const theme = useContext(ThemeContext)
+  const {theme} = useContext(ThemeContext)
 
   // const cellsRef = React.useRef([])
   const [cells, setCells] = useState([''])
@@ -18,7 +18,6 @@ export const BlogCells = () => {
 
   return (
     <div className={theme}>
-      theme is {theme}
       {cells.map((e, i) => <BlogCell key={i} 
       // ref={input => cellsRef[i] = input}
       addCell={(i) => addNewBlogCell(i)} />)}

@@ -1,10 +1,11 @@
 import { useContext, useState } from "react"
 import React from 'react';
 import { ThemeContext } from "../../providers/ThemeProvider";
+import './index.css'
 
 export const BlogCell = ({addCell}) => {
 
-  const theme = useContext(ThemeContext)
+  const {theme} = useContext(ThemeContext)
 
   const [value, setValue] = useState({html: '', text: ''})
 
@@ -26,11 +27,14 @@ export const BlogCell = ({addCell}) => {
     <button onClick={() => setCurrentFormatting(formats.h1)}>h1</button>
     <button onClick={() => setCurrentFormatting(formats.p)}>p</button> */}
 
-    <p>{value.text}</p>
-    <p>{value.html}</p>
+    {/* <p>{value.text}</p>
+    <p>{value.html}</p> */}
+    {/* <br /> */}
     <br />
-    <br />
-    <div onInput={(event) => _changeListener(event)} contentEditable="true" className='blog-cell' onKeyDown={_handleKeyDown} ></div>
+    <div onInput={(event) => _changeListener(event)} 
+    contentEditable="true" 
+    className={'blog-cell ' + theme} 
+    onKeyDown={_handleKeyDown} ></div>
  
   </div>)
 }

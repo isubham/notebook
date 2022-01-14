@@ -1,0 +1,30 @@
+.dark {
+  background-color: black;
+  color: white;
+}
+
+.light {
+  background-color: white;
+  color: black;
+}
+
+.dark.toolbar  {
+  border-bottom: 1px solid #333333;
+  background-color: black;
+}
+
+.dark.toolbar > button{
+  background-color: #444444;
+  color: #999999;
+}
+
+.dark.blog-cell {
+  background-color: #444444;
+  color: #999999;
+  border: 1px solid #999999;
+}
+
+.light.blog-cell {
+  background-color: #efefef;
+  border: 1px solid #fefefe;
+}
