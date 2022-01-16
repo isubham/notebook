@@ -3,6 +3,7 @@ import { List, Map } from 'immutable';
 export const getRef = (value) => value.get('ref')
 
 export const getVisibility = (index, cells) => {
+  return true
   return index < cells.size - 1
 }
 
