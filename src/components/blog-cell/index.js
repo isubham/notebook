@@ -23,17 +23,11 @@ export const BlogCell = forwardRef(({addCell, pos, pointer, visible}, ref) => {
     } 
   }
 
-
-  const setFocus = () => {
-    pointer.current.focus()
-  }
-
   return (
     <div onInput={(event) => _changeListener(event)} 
     ref={pointer}
     contentEditable="true" 
-className={`blog-cell ${theme} ${theme} ${visible ? '' : 'invisible'}`}
+    className={`blog-cell ${theme}`}
     onKeyDown={_handleKeyDown} ></div>
-    // {/* <button onClick={setFocus}>set Focus</button> */}
   )
 })

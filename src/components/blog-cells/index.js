@@ -2,7 +2,7 @@
 import React, { useState, useContext, createRef, useEffect  } from 'react';
 import { ThemeContext } from '../../providers/ThemeProvider';
 import { BlogCell } from '../blog-cell';
-import {getRef, getVisibility, newBlogCell, createListFromArray, insertInList} from './logic'
+import {getRef, newBlogCell, createListFromArray, insertInList} from './logic'
 
 export const BlogCells = () => {
 
@@ -32,7 +32,7 @@ export const BlogCells = () => {
     <div className={theme}>
       {(cells).map((value, index) => <BlogCell key={index} pos={index} 
       forwardRef={getRef(value)} pointer={getRef(value)}
-      addCell={(i) => addNewBlogCell(i)} visible={getVisibility(index, cells)}/>)}
+      addCell={(i) => addNewBlogCell(i)} />)}
     </div>
   )
 }
