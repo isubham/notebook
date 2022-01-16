@@ -1,9 +1,9 @@
-import { useContext, useState } from "react"
+import { forwardRef, useContext, useEffect, useState } from "react"
 import React from 'react';
 import { ThemeContext } from "../../providers/ThemeProvider";
 import './index.css'
 
-export const BlogCell = ({addCell}) => {
+export const BlogCell = forwardRef(({addCell, pos, pointer, visible}, ref) => {
 
   const {theme} = useContext(ThemeContext)
 
@@ -18,23 +18,22 @@ export const BlogCell = ({addCell}) => {
   const _handleKeyDown = (event) => {
     if (event.key === 'Enter')
     {
-        addCell()
-    }   
+        addCell(pos)
+    } 
   }
 
-  return (<div className={theme}>
-    {/* <p>Current Format {currentFormat}</p>
-    <button onClick={() => setCurrentFormatting(formats.h1)}>h1</button>
-    <button onClick={() => setCurrentFormatting(formats.p)}>p</button> */}
 
-    {/* <p>{value.text}</p>
-    <p>{value.html}</p> */}
-    {/* <br /> */}
-    <br />
+  const setFocus = () => {
+    pointer.current.focus()
+  }
+
+  return (<div  >
     <div onInput={(event) => _changeListener(event)} 
+    ref={pointer}
     contentEditable="true" 
-    className={'blog-cell ' + theme} 
+className={`blog-cell ${theme} ${theme} ${visible ? '' : 'invisible'}`}
     onKeyDown={_handleKeyDown} ></div>
+    {/* <button onClick={setFocus}>set Focus</button> */}
  
   </div>)
-}
+})

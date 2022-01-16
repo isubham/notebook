@@ -8,15 +8,6 @@
   color: black;
 }
 
-.dark.toolbar  {
-  border-bottom: 1px solid #333333;
-  background-color: black;
-}
-
-.dark.toolbar > button{
-  background-color: #444444;
-  color: #999999;
-}
 
 .dark.blog-cell {
   background-color: #444444;

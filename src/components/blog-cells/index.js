@@ -1,26 +1,32 @@
 
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, createRef  } from 'react';
 import { ThemeContext } from '../../providers/ThemeProvider';
 import { BlogCell } from '../blog-cell';
+import {getRef, getVisibility, newBlogCell, createListFromArray, insertInList} from './logic'
 
 export const BlogCells = () => {
 
   const {theme} = useContext(ThemeContext)
 
-  // const cellsRef = React.useRef([])
-  const [cells, setCells] = useState([''])
+  const [cells, setCells] = useState(createListFromArray([newBlogCell(createRef()), newBlogCell(createRef())]))
+
   const addNewBlogCell = (cellPos) => {
-    setCells([...cells, ''])
-    console.log(cells)
-    // cellsRef.current = cells.map((_, i) => cellsRef.)
+    setCells(insertInList(
+      {
+        list: cells, 
+        pos: cellPos + 1, 
+        value: newBlogCell(createRef())
+      }))
+    const ref = getRef(cells.get(cellPos + 1))
+    ref.current.focus()
   }
 
 
   return (
     <div className={theme}>
-      {cells.map((e, i) => <BlogCell key={i} 
-      // ref={input => cellsRef[i] = input}
-      addCell={(i) => addNewBlogCell(i)} />)}
+      {(cells).map((value, index) => <BlogCell key={index} pos={index} 
+      forwardRef={getRef(value)} pointer={getRef(value)}
+      addCell={(i) => addNewBlogCell(i)} visible={getVisibility(index, cells)}/>)}
     </div>
   )
 }

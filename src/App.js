@@ -6,10 +6,12 @@ import { Toolbar } from './components/toolbar';
 function App() {
 
   return (
+    <div className='app'>
       <ThemeProvider >
         <Toolbar />
         <BlogCells />
       </ThemeProvider>
+    </div>
   );
 }
 
