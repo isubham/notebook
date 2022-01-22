@@ -1,5 +1,5 @@
-import { BlogCell } from "..";
-import { render, screen } from '@testing-library/react'
+import { BlogCell } from '..'
+import { render } from '@testing-library/react'
 
 describe('BlogCell', () => {
   test('should render the component without error', () => {

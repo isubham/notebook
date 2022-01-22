@@ -1,33 +1,38 @@
-import { forwardRef, useContext, useEffect, useState } from "react"
-import React from 'react';
-import { ThemeContext } from "../../providers/ThemeProvider";
+import { useContext, useState } from 'react'
+import { ThemeContext } from '../../providers/ThemeProvider'
+import PropTypes from 'prop-types'
 import './index.css'
 
-export const BlogCell = forwardRef(({addCell, pos, pointer, visible}, ref) => {
+export const BlogCell = ({ addCell, pos, pointer, onValueChange }) => {
+  const { theme } = useContext(ThemeContext)
 
-  const {theme} = useContext(ThemeContext)
-
-  const [value, setValue] = useState({html: '', text: ''})
+  const [value, setValue] = useState({ html: '', text: '' })
 
   const _changeListener = (event) => {
     const [text, html] = [event.target.innerText, event.target.innerHTML]
-    setValue({text: text, html: html})
-
+    setValue({ text: text, html: html })
+    onValueChange(value)
   }
 
   const _handleKeyDown = (event) => {
-    if (event.key === 'Enter')
-    {
-      event.preventDefault();
+    if (event.key === 'Enter') {
+      event.preventDefault()
       addCell(pos)
-    } 
+    }
   }
 
   return (
-    <div onInput={(event) => _changeListener(event)} 
+    <div onInput={(event) => _changeListener(event)}
     ref={pointer}
-    contentEditable="true" 
+    contentEditable="true"
     className={`blog-cell ${theme}`}
     onKeyDown={_handleKeyDown} ></div>
   )
-})
+}
+
+BlogCell.propTypes = {
+  addCell: PropTypes.func,
+  pos: PropTypes.number,
+  pointer: PropTypes.object,
+  onValueChange: PropTypes.func
+}
