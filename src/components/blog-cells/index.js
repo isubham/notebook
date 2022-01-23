@@ -10,7 +10,7 @@ export const BlogCells = () => {
   const [cells, setCells] = useState(createListFromArray([newBlogCell(createRef())]))
   const [createdIndex, setCreatedIndex] = useState(0)
 
-  const addNewBlogCell = (cellPos, value) => {
+  const addNewBlogCell = (cellPos) => {
     const newlyCreatedIndex = cellPos + 1
     setCreatedIndex(newlyCreatedIndex)
     const newCells = insertInList(
@@ -27,11 +27,14 @@ export const BlogCells = () => {
     ref.current.focus()
   }, [createdIndex, cells])
 
+
   return (
     <div className={theme}>
       {(cells).map((value, index) => <BlogCell key={value.get('id')} pos={index}
+      value={value}
       pointer={getRef(value)}
-      addCell={(i) => addNewBlogCell(i)} />)}
+      addCell={(i) => addNewBlogCell(i)} 
+      />)}
     </div>
   )
 }

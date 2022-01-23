@@ -24,7 +24,10 @@ const ThemeProvider = ({ children }) => {
 }
 
 ThemeProvider.propTypes = {
-  children: PropTypes.object
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+]).isRequired
 }
 
 export { ThemeProvider }
