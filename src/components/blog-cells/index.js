@@ -22,6 +22,14 @@ export const BlogCells = () => {
     setCells(newCells)
   }
 
+  const removeCellIfMultipleCellExist = (cellPos) => {
+    if (cells.size > 1)
+    {
+      setCreatedIndex(cellPos - 1 > -1 ? cellPos - 1 : 0)
+      setCells(cells.remove(cellPos))
+    }
+  }
+
   useEffect(() => {
     const ref = getRef(cells.get(createdIndex))
     ref.current.focus()
@@ -29,12 +37,14 @@ export const BlogCells = () => {
 
 
   return (
-    <div className={theme}>
+    <div className={`bg-black ${theme}`}>
       {(cells).map((value, index) => <BlogCell key={value.get('id')} pos={index}
       value={value}
       pointer={getRef(value)}
       addCell={(i) => addNewBlogCell(i)} 
+      removeCellIfMultipleCellExist={(i) => removeCellIfMultipleCellExist(i)}
       />)}
+      <hr />
     </div>
   )
 }

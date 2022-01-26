@@ -1,4 +1,4 @@
-import { useCallback, useContext, useMemo, useState } from 'react'
+import { useCallback, useContext, useState } from 'react'
 import { ThemeContext } from '../../providers/ThemeProvider'
 import PropTypes from 'prop-types'
 import './index.css'
@@ -6,7 +6,7 @@ import { List, Map } from 'immutable'
 import { guid } from '../../utils/guuid'
 import debounce from 'lodash.debounce'
 
-export const BlogCell = ({ addCell, pos, pointer }) => {
+export const BlogCell = ({ addCell, pos, pointer, removeCellIfMultipleCellExist }) => {
   const { theme } = useContext(ThemeContext)
 
   const buildVersion = (value) => Map({value: Map(value), on: guid()})
@@ -34,6 +34,12 @@ export const BlogCell = ({ addCell, pos, pointer }) => {
   const slowedChangedListener = useCallback(debounce(_changeListener, 400), [versions])
 
   const _handleKeyDown = (event) => {
+
+
+    if (event.key === 'Backspace' && value.get('text').length === 0) {
+
+      removeCellIfMultipleCellExist(pos)
+    }
     if (event.key === 'Enter') {
       event.preventDefault()
       addCell(pos)
@@ -54,10 +60,9 @@ export const BlogCell = ({ addCell, pos, pointer }) => {
   
 
   return (
-    <div>
+    <div className='wrapper'>
     {showVersions(versions)}
-    <hr />
-    current {showValue(value)}
+    {/* current {showValue(value)} */}
     <div onInput={slowedChangedListener}
     ref={pointer}
     contentEditable="true"
@@ -71,4 +76,5 @@ BlogCell.propTypes = {
   addCell: PropTypes.func,
   pos: PropTypes.number,
   pointer: PropTypes.object,
+  removeCellIfMultipleCellExist: PropTypes.func.isRequired
 }
