@@ -1,13 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
-import { BlogCell } from './components/blog-cell/blog-cell';
+import './App.css'
+import { BlogCells } from './components/blog-cells'
+import { ThemeProvider } from './providers/ThemeProvider'
+import { Toolbar } from './components/toolbar'
 
-function App() {
+function App () {
   return (
-    <div className="App">
-      <BlogCell />
+    <div className='app'>
+      <ThemeProvider >
+        <Toolbar />
+        <BlogCells />
+
+        {/* <Versions /> */}
+      </ThemeProvider>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
