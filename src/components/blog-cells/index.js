@@ -37,7 +37,7 @@ export const BlogCells = () => {
 
 
   return (
-    <div className={`bg-black ${theme}`}>
+    <div className={`blog-cells ${theme}`}>
       {(cells).map((value, index) => <BlogCell key={value.get('id')} pos={index}
       value={value}
       pointer={getRef(value)}

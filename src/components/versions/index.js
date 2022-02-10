@@ -1,5 +1,4 @@
 import { List } from 'immutable'
-import PropTypes from 'prop-types'
 import { useState } from 'react'
 import { guid } from '../../utils/guuid'
 export const Versions = () => {
@@ -20,7 +19,4 @@ export const Versions = () => {
       <button onClick={addVersion}>Add Version</button>
   </div>
 
-}
-
-Versions.propTypes = {
 }

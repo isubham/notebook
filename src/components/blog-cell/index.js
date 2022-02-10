@@ -1,34 +1,53 @@
+/* eslint-disable no-unused-vars */
 import { useCallback, useContext, useState } from 'react'
 import { ThemeContext } from '../../providers/ThemeProvider'
 import PropTypes from 'prop-types'
 import './index.css'
-import { List, Map } from 'immutable'
-import { guid } from '../../utils/guuid'
+import { Map } from 'immutable'
 import debounce from 'lodash.debounce'
+import { wsConnect, wsSend } from './ws'
+import { getChannelIdFromUrl, getSendorFromUrl } from '../../utils/url'
+
+import { useVersion } from './versioning'
 
 export const BlogCell = ({ addCell, pos, pointer, removeCellIfMultipleCellExist }) => {
   const { theme } = useContext(ThemeContext)
 
-  const buildVersion = (value) => Map({value: Map(value), on: guid()})
+  const { versions, addVersion, showVersions } = useVersion()
 
-  const [versions, setVersions] = useState(List())
+
+  const [wsUrl, setWsUrl] = useState("ws://localhost:9000")
+  const [channel, setChannel] = useState(getChannelIdFromUrl())
+  const [sendor, setSendor] = useState(getSendorFromUrl())
+
+  const onWSMessage = (value) => {
+    if (value !== undefined) {
+      const wsMessage = JSON.parse(value.data)
+      const change = {text:wsMessage.message.text, sendor:wsMessage.message.sendor}
+      if (sendor !== change.sendor) {
+        addVersion(change)
+      }
+    }
+  }
+
+  const ws = wsConnect(wsUrl, channel, onWSMessage)
+  
 
   const newBlogCellModel = ({html, text}) => Map({ 
-    html: html || '', 
-    text: text || '',
+    text: text || ''
     })
 
 
   const [value, setValue] = useState(newBlogCellModel('', ''))
 
   const _changeListener = ({target: {innerHTML, innerText}}) => {
-    const newVersion = versions.push(buildVersion({html: innerHTML, text: innerText}))
-    setVersions(newVersion)
-
+    const change = {text: innerText, sendor: sendor}
+    addVersion(change)
     const newValue = value
       .set('html', innerHTML)
       .set('text', innerText)
     setValue(newValue)
+    sendChange(change)
   }
 
   const slowedChangedListener = useCallback(debounce(_changeListener, 400), [versions])
@@ -46,28 +65,20 @@ export const BlogCell = ({ addCell, pos, pointer, removeCellIfMultipleCellExist 
     }
   }
 
-  const showVersions = (versions) => {
-    return <>
-    {versions.map((version, index) => {
-      return <div key={version.get('on')}><b>version {index}</b> {showValue(version.get('value'))}</div>
-    })}</>
-  }
 
-
-  const showValue = (value) => {
-    return <span>{value.get('text')}</span>
+  const sendChange = (message) => {
+    console.log('message', message)
+    wsSend({wsClient: ws, channel, sendor, message})
   }
-  
 
   return (
     <div className='wrapper'>
-    {showVersions(versions)}
-    {/* current {showValue(value)} */}
-    <div onInput={slowedChangedListener}
-    ref={pointer}
-    contentEditable="true"
-    className={`blog-cell ${theme}`}
-    onKeyDown={_handleKeyDown} ></div>
+      {showVersions()}
+      <div onInput={slowedChangedListener}
+      ref={pointer}
+      contentEditable="true"
+      className={`blog-cell ${theme}`}
+      onKeyDown={_handleKeyDown} ></div>
     </div>
   )
 }
